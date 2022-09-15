@@ -19,8 +19,8 @@
         <tr>
             <td>{{veterinario.id}}</td>
             <td>{{veterinario.num_profesional}}</td>             
-            <td>{{veterinario.nombre}}</td>            
-            <td>{{veterinario.celular}}</td>            
+            <td>{{veterinario.personas.user.firts_name}} {{veterinario.personas.user.last_name}}</td>            
+            <td>{{veterinario.personas.celular}}</td>            
             </tr>
         {% endfor %}
     </table>

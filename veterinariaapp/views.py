@@ -7,10 +7,14 @@ from .models import *
 def home(request):
     return render(request, 'home/index.html')
 
+
 #tabla de los datos del o de los 
 def lista_veterinario(request):
     veterinarios= Veterinario.objects.all()
     return render(request, 'veterinario/lista_veterinario.html',{'veterinarios':veterinarios})
+
+
+
 
 # Crear las vistas aqui 
 def crear_veterinario(request):
@@ -27,3 +31,10 @@ def crear_veterinario(request):
     else:
         form= VeterinarioFrom()
         return render (request,'veterinario/crear_veterinario.html',{'form':form})
+    
+#eliminar -CRUD- veterinario
+def borrar_veterinario(request, id):
+    veterinario= Veterinario.objects.get(id=id)
+    veterinario.delete()
+    mensaje= f'El veterinario {veterinario} fue eliminado correctamente'
+    return render(request, 'veterinario/mensaje.html',{'mensaje':mensaje})

@@ -8,22 +8,20 @@ class Persona(models.Model):
     dirreccion= models.CharField(max_length=100, blank=True)
     celular= models.CharField(max_length=10)
     
-    '''def __str__(self):
-        return f"{self.user.firts_name} ({self.user.last_name})"'''
+    def __str__(self):
+        return f"{self.user.first_name} {self.user.last_name}"
 
 class cliente(models.Model):
-    user= models.OneToOneField(User, on_delete=models.CASCADE)
     personas=models.ForeignKey(Persona, on_delete=models.CASCADE)
     def __str__(self):
-        return f"{self.user.firts_name} ({self.user.last_name})" 
+        return f"{self.user.first_name} {self.user.last_name}" 
 
 class Veterinario(models.Model):
-    user= models.OneToOneField(User, on_delete=models.CASCADE)
     personas=models.ForeignKey(Persona, on_delete=models.CASCADE)
     num_profesional=models.CharField(max_length=20)
     
     def __str__(self):
-        return f"{self.user.firts_name} ({self.user.last_name})" 
+        return f"{self.personas.user.first_name} {self.personas.user.last_name}" 
 
 class Mascota(models.Model):
     cliente=models.ForeignKey(cliente, on_delete=models.CASCADE)
