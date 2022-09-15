@@ -8,8 +8,8 @@ class Persona(models.Model):
     dirreccion= models.CharField(max_length=100, blank=True)
     celular= models.CharField(max_length=10)
     
-    def __str__(self):
-        return f"{self.user.firts_name} ({self.user.last_name})"
+    '''def __str__(self):
+        return f"{self.user.firts_name} ({self.user.last_name})"'''
 
 class cliente(models.Model):
     user= models.OneToOneField(User, on_delete=models.CASCADE)

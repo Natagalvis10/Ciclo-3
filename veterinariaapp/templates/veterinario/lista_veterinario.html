@@ -1,0 +1,27 @@
+<!--Se trae la extención de la base-->
+{% extends 'layout/base.html' %}
+
+<!--Se nombre la pagina con lo que hereda de base.html-->
+{% block titulo %}
+    Listar Veterinario
+{% endblock titulo %}
+
+<!--se herrada lo del cuenpo de base.html-->
+{% block cuerpo %}
+    <table class="table table-striped-column">
+        <tr>
+            <th>ID</th>            
+            <th>Numero Profesional</th>            
+            <th>Nombre</th>
+            <th>Celular</th>
+        </tr>
+        {% for veterinario in  veterinarios%}
+        <tr>
+            <td>{{veterinario.id}}</td>
+            <td>{{veterinario.num_profesional}}</td>             
+            <td>{{veterinario.nombre}}</td>            
+            <td>{{veterinario.celular}}</td>            
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock cuerpo %}
