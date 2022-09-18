@@ -4,6 +4,11 @@
     Crear Veterinario
 {% endblock titulo %}
 
+<!--Un titulo que hereda de base.html-->
+{% block pagina %}
+    Formulario para Veterinario
+{% endblock pagina %}
+
 {% block cuerpo %}
     <form method="post">
         {% csrf_token %}

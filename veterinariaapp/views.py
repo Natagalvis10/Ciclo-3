@@ -7,14 +7,10 @@ from .models import *
 def home(request):
     return render(request, 'home/index.html')
 
-
 #tabla de los datos del o de los 
 def lista_veterinario(request):
     veterinarios= Veterinario.objects.all()
     return render(request, 'veterinario/lista_veterinario.html',{'veterinarios':veterinarios})
-
-
-
 
 # Crear las vistas aqui 
 def crear_veterinario(request):
