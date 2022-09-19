@@ -25,7 +25,7 @@ class Veterinario(models.Model):
 
 class Mascota(models.Model):
     cliente=models.ForeignKey(cliente, on_delete=models.CASCADE)
-    nobre=models.CharField(max_length=50)
+    nombre=models.CharField(max_length=50)
     raza=models.CharField(max_length=50)
     sexo=models.CharField(max_length=20)
     especie=models.CharField(max_length=20)
