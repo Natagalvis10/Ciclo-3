@@ -14,7 +14,7 @@ class Persona(models.Model):
 class cliente(models.Model):
     personas=models.ForeignKey(Persona, on_delete=models.CASCADE)
     def __str__(self):
-        return f"{self.user.first_name} {self.user.last_name}" 
+        return f"{self.personas.user.first_name} {self.personas.user.last_name}" 
 
 class Veterinario(models.Model):
     personas=models.ForeignKey(Persona, on_delete=models.CASCADE)
