@@ -1,0 +1,19 @@
+{% extends 'layout/base.html' %}
+
+{% block titulo %}
+    Eliminar Veterinario
+{% endblock titulo %}
+
+<!--Un titulo que hereda de base.html-->
+{% block pagina %}
+   Eliminar un veterinario
+{% endblock pagina %}
+
+{% block cuerpo %}
+    <form method="post">
+        {% csrf_token %}
+        <p class "h2 navbar-brand"> Eliminar veterinario {{veterinario.personas.user.first_name}} {{veterinario.personas.user.last_name}} del registro</p>
+        <button type="btn btn-danger" type= "submit">Sí, eliminar</button>
+        <a href="{% url 'lista-veterinarios' %}" class="btn btn-default">Cancelar</a>
+    </form>
+{% endblock cuerpo %}
