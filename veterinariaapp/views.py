@@ -19,7 +19,15 @@ def crear_veterinario(request):
     if request.method == 'POST':
         form = VeterinarioFrom(request.POST)
         if form.is_valid():
-            veterinario=form.save()
+            usuario = form.cleaned_data['usuario']
+            password = form.cleaned_data['password']
+            veterinario=form.save(commit=False)
+            persona = Persona.objects.create_user(
+                username=usuario, 
+                password=password
+                )
+            veterinario.persona = persona
+            veterinario.save()
             mensaje=f'El veterinario {veterinario} fue agreado correctamente'
             return render(request, 'veterinario/mensaje.html',{'mensaje':mensaje})
             pass

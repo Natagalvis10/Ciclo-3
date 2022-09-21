@@ -1,4 +1,3 @@
-from tkinter import Widget
 from django.contrib.auth.models import Group
 from django import forms
 from .models import *
@@ -6,9 +5,19 @@ from .models import *
 #se crea el formulario para veterinario 
 
 class VeterinarioFrom(forms.ModelForm):
+    usuario = forms.CharField(max_length=80, widget=forms.TextInput(
+        attrs={
+            'class': 'form-control'
+        }
+    ))
+    password = forms.CharField(max_length=120, widget=forms.PasswordInput(
+        attrs={
+            'class': 'form-control'
+        }
+    ))
     class Meta:
         model= Veterinario
-        fields= '__all__'
+        fields= ['num_profesional']
         
    
         

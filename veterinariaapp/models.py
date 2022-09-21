@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+
 class Persona(AbstractUser):
     tipo_documento= models.CharField(max_length=20)
     num_documento= models.CharField(max_length=20)
@@ -7,13 +8,13 @@ class Persona(AbstractUser):
     celular= models.CharField(max_length=10)
     
     class Meta(AbstractUser.Meta):
-        abstract= True
+        abstract= False
     
     def __str__(self):
         return f"{self.user.first_name} {self.user.last_name}"
-'''
+
 class cliente(models.Model):
-    persona=models.ForeignKey('veterinariaapp.Persona', on_delete=models.CASCADE)
+    persona=models.ForeignKey(Persona, on_delete=models.CASCADE)
     def __str__(self):
         return f"{self.user.first_name} {self.user.last_name}" 
 
@@ -44,4 +45,3 @@ class Registro(models.Model):
     anamnesicos=models.TextField()
     diagnostico=models.TextField()
     tratamiento=models.TextField()
-    '''
