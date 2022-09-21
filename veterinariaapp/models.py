@@ -1,23 +1,24 @@
 from django.db import models
-from django.contrib.auth.models import User
-
-class Persona(models.Model):
-    user= models.OneToOneField(User, on_delete=models.CASCADE)
+from django.contrib.auth.models import AbstractUser
+class Persona(AbstractUser):
     tipo_documento= models.CharField(max_length=20)
     num_documento= models.CharField(max_length=20)
     dirreccion= models.CharField(max_length=100, blank=True)
     celular= models.CharField(max_length=10)
     
+    class Meta(AbstractUser.Meta):
+        abstract= True
+    
     def __str__(self):
         return f"{self.user.first_name} {self.user.last_name}"
-
+'''
 class cliente(models.Model):
-    personas=models.ForeignKey(Persona, on_delete=models.CASCADE)
+    persona=models.ForeignKey('veterinariaapp.Persona', on_delete=models.CASCADE)
     def __str__(self):
         return f"{self.user.first_name} {self.user.last_name}" 
 
 class Veterinario(models.Model):
-    personas=models.ForeignKey(Persona, on_delete=models.CASCADE)
+    persona=models.ForeignKey('veterinariaapp.Persona', on_delete=models.CASCADE)
     num_profesional=models.CharField(max_length=20)
     
     def __str__(self):
@@ -43,4 +44,4 @@ class Registro(models.Model):
     anamnesicos=models.TextField()
     diagnostico=models.TextField()
     tratamiento=models.TextField()
-    
+    '''
