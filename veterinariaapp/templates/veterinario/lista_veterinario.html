@@ -27,8 +27,8 @@
             <tr>
                 <td>{{veterinario.id}}</td>
                 <td>{{veterinario.num_profesional}}</td>             
-                <td>{{veterinario.personas.user.first_name}} {{veterinario.personas.user.last_name}}</td>            
-                <td>{{veterinario.personas.celular}}</td>
+                <td>{{veterinario.persona.first_name}} {{veterinario.persona.last_name}}</td>            
+                <td>{{veterinario.persona.celular}}</td>
                 <td>
                     <a href="{% url 'actualizar-veterinario' veterinario.id %}" class="btn btn-warning">Editar</a>
                     <a href="{% url 'eliminar-veterinario' veterinario.id %}" class="btn btn-danger">Eliminar</a>

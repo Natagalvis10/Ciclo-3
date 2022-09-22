@@ -16,14 +16,14 @@ class Persona(AbstractUser):
 class cliente(models.Model):
     persona=models.ForeignKey(Persona, on_delete=models.CASCADE)
     def __str__(self):
-        return f"{self.user.first_name} {self.user.last_name}" 
+        return f"{self.persona.first_name} {self.persona.last_name}" 
 
 class Veterinario(models.Model):
     persona=models.ForeignKey('veterinariaapp.Persona', on_delete=models.CASCADE)
     num_profesional=models.CharField(max_length=20)
     
     def __str__(self):
-        return f"{self.personas.user.first_name} {self.personas.user.last_name}" 
+        return f"{self.persona.first_name} {self.persona.last_name}" 
 
 class Mascota(models.Model):
     cliente=models.ForeignKey(cliente, on_delete=models.CASCADE)

@@ -4,10 +4,11 @@ from .models import *
 
 #se crea el formulario para veterinario 
 
-class VeterinarioFrom(forms.ModelForm):
-    usuario = forms.CharField(max_length=80, widget=forms.TextInput(
+class VeterinarioForm(forms.ModelForm):
+    username = forms.CharField(max_length=20, label='Usuario',widget=forms.TextInput(
         attrs={
-            'class': 'form-control'
+            'class': 'form-control',
+            'placeholder': "Nombre de usuario"
         }
     ))
     password = forms.CharField(max_length=120, widget=forms.PasswordInput(
@@ -15,6 +16,12 @@ class VeterinarioFrom(forms.ModelForm):
             'class': 'form-control'
         }
     ))
+    email = forms.EmailField()
+    nombres= forms.CharField(max_length=120)
+    apellidos= forms.CharField(max_length=120)
+    tipo_documento= forms.CharField(max_length=20)
+    num_documento= forms.CharField(max_length=20)
+    celular= forms.CharField(max_length=10)
     class Meta:
         model= Veterinario
         fields= ['num_profesional']
