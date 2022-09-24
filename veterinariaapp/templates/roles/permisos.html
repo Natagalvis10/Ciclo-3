@@ -1,0 +1,28 @@
+<!--Se trae la extención de la base-->
+{% extends 'layout/base.html' %}
+
+<!--Se nombre la pagina con lo que hereda de base.html-->
+{% block titulo %}
+    Crear Permisos
+{% endblock titulo %}
+
+<!--Un titulo que hereda de base.html-->
+{% block pagina %}
+    Permisos
+{% endblock pagina %}
+
+<!--se herrada lo del cuenpo de base.html-->
+{% block cuerpo %}
+   <form action="{% url 'agregar-permiso' %}" method="POST">
+    {% csrf_token %}
+    <div class="mb-3"> 
+        <label for="permisos" class="form-label">Permisos: </label>
+        <select id="permisos" name="permisos" class="form-select" multiple>
+            {% for permiso in permisos %}
+                <option value="{{permiso.id}}">{{permiso.name}}</option>
+            {% endfor %}
+        </select>
+    </div>
+    {% include 'layout/botones_crear.html' %}
+   </form>
+{% endblock cuerpo %}

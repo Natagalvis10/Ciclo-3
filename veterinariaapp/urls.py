@@ -2,9 +2,19 @@ from django.urls import path
 from .views import *
 
 urlpatterns = [
+    #URLS DEL HOME PAGE
     path('',home, name='home'),
+    #URLS PARA EL MODELO DE ROLES
+    path('listar/rol/', listar_rol,name='lista-rol'),
+    path('crear/rol/', crear_rol, name='crear-rol'),
+    path('eliminar/rol/<int:id>', eliminar_rol, name='eliminar-rol'),
+    path('agregar/permisos', agregar_permisos, name='agregar-permiso'),
+    #URLS DEL MODELO DE VETERINARIO
     path('listar/veterinario/', lista_veterinario,name='lista-veterinarios'),
     path('crear/veterinario/', crear_veterinario, name='crear-veterinario'),
     path('actualizar/veterinario/<int:id>',actualizar_veterinario , name='actualizar-veterinario'),
     path('eliminar/veterinario/<int:id>', eliminar_veterinario, name='eliminar-veterinario'),
+    #URLS DEL MODELO DE CLIENTE
+    path('listar/cliente/', lista_cliente,name='lista-clientes'),
+    path('crear/cliente/', crear_veterinario, name='crear-cliente')
 ]

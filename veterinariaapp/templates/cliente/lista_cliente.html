@@ -3,30 +3,36 @@
 
 <!--Se nombre la pagina con lo que hereda de base.html-->
 {% block titulo %}
-    Listar Roles
+    Listar Cliente
 {% endblock titulo %}
 
 <!--Un titulo que hereda de base.html-->
 {% block pagina %}
-    Roles
+    Clientes
 {% endblock pagina %}
 
 <!--se herrada lo del cuenpo de base.html-->
 {% block cuerpo %}
-    <a href="" class="btn btn-primary mb-3">Crear Roles</a>
+    <a href="" class="btn btn-primary mb-3">Ingresar Cliente</a>
     <div class="table-responsive">
         <table class="table table-striped-column">
             <tr>
-                <th>ID</th>            
-                <th>Nombre</th>
+                <th>ID</th>           
+                <th>Nombre Clente</th>
+                <th>Numero Documento</th>
+                <th>Celular</th>
+                <th>Correo</th>
+                <th>Opciones</th>
             </tr>
-            {% for rol in  roles%}
+            {% for cliente in  clientes%}
             <tr>
-                <td>{{rol.id}}</td>
-                <td>{{rol.name}}</td>             
+                <td></td>
+                <td></td>             
+                <td></td>            
+                <td></td>
                 <td>
                     <a href="" class="btn btn-warning">Editar</a>
-                    <a href="{% url 'eliminar-rol' rol.id %}" class="btn btn-danger">Eliminar</a>
+                    <a href="" class="btn btn-danger">Eliminar</a>
                 </td>          
                 </tr>
             {% endfor %}

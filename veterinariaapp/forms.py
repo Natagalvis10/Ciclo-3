@@ -1,9 +1,9 @@
 from django.contrib.auth.models import Group
+from django.contrib.contenttypes.models import ContentType
 from django import forms
 from .models import *
 
-#se crea el formulario para veterinario 
-
+#FORMS DE VETERINARIO
 class VeterinarioForm(forms.ModelForm):
     username = forms.CharField(max_length=20, label='Usuario',widget=forms.TextInput(
         attrs={
@@ -16,26 +16,68 @@ class VeterinarioForm(forms.ModelForm):
             'class': 'form-control'
         }
     ))
-    email = forms.EmailField()
-    nombres= forms.CharField(max_length=120)
-    apellidos= forms.CharField(max_length=120)
-    tipo_documento= forms.CharField(max_length=20)
-    num_documento= forms.CharField(max_length=20)
-    celular= forms.CharField(max_length=10)
+    rol=forms.ModelChoiceField(label='Rol', queryset=Group.objects.all(), widget=forms.Select(
+        attrs={
+            'class':'form-select'
+        }
+    ))
+    email = forms.EmailField(widget=forms.EmailInput(
+        attrs={
+            'class':'form-control'
+        }
+    ))
+    nombres= forms.CharField(max_length=120, widget=(forms.TextInput(
+        attrs={
+            'class': "form-control"
+        }
+    )))
+    apellidos= forms.CharField(max_length=120, widget=(forms.TextInput(
+        attrs={
+            'class': "form-control"
+        }
+    )))
+    tipo_documento= forms.CharField(max_length=20, widget=(forms.TextInput(
+        attrs={
+            'class': "form-control"
+        }
+    )))
+    num_documento= forms.CharField(max_length=20, widget=(forms.TextInput(
+        attrs={
+            'class': "form-control"
+        }
+    )))
+    celular= forms.CharField(max_length=10, widget=(forms.TextInput(
+        attrs={
+            'class': "form-control"
+        }
+    )))
+    num_profesional= forms.CharField(max_length=10, widget=(forms.TextInput(
+        attrs={
+            'class': "form-control"
+        }
+    )))
+
     class Meta:
         model= Veterinario
         fields= ['num_profesional']
-        
-   
-        
-#FORMULARIO PARA CREAR LOS GRUPOS
+
+#FORMS DE CLIENTE
+class ClienteForm(forms.ModelForm):
+    class Meta:
+        model= cliente
+        fields= '__all__'
+
+#FORMS DE GRUPOS
 class GroupsForm(forms.ModelForm):
     name = forms.CharField(max_length=80, label='Rol', widget=forms.TextInput(
+        attrs={'class': 'form-control'
+        }
+    ))
+    contenido =forms.ModelChoiceField(queryset=ContentType.objects.filter(app_label='veterinariaapp'), widget=forms.Select(
         attrs={
-            'class': 'form-control',
+            'class':'form-select'
         }
     ))
     class Meta:
         model= Group
-        fields='__all__'
-    
+        fields= '__all__'

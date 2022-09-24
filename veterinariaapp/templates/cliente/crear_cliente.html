@@ -1,0 +1,20 @@
+{% extends 'layout/base.html' %}
+
+{% block titulo %}
+    Crear Cliente
+{% endblock titulo %}
+
+<!--Un titulo que hereda de base.html-->
+{% block pagina %}
+    Formulario para Cliente
+{% endblock pagina %}
+
+{% block cuerpo %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }} 
+        <button type="submit">Guadar</button>
+        <button type="reset">Borrar</button>
+    </form>
+{% endblock cuerpo %}
+        
