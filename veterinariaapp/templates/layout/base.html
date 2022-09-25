@@ -22,7 +22,16 @@
                             </li>
                             <li class="nav-item">
                                 <!--FALTA LA URL PARA LA CONSULTA DE USUARIOS -->
-                                <a class="nav-link active" href="">Ususario</a>
+                                <a class="nav-link active" href="{% url 'lista-clientes' %}">Cliente</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="{% url 'lista-veterinarios' %}">Veterinario</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="">Mascotas</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="{% url 'lista-rol' %}">Roles</a>
                             </li>
                             <li class="nav-item">
                                 <!--FALTA LA URL PARA LA NUESTRA INFORMACIÓN COMO DESARROLLADORES DE LA APLICACIÓN WEB -->
@@ -31,6 +40,16 @@
                         </ul>
                     </div>
                 </div>
+                <span class="navbar-text d-flex me-3">
+                    {% if user.is_authenticated %}
+                        <div class="me-2">
+                            {{ user.username }}  
+                        </div>
+                        <a href="{% url 'logout' %}" class="link-primary">Salir</a>
+                    {% else %}
+                        <a class="link-primary" href="{% url 'login' %}" >Ingresar</a>
+                    {% endif %}
+                </spam> 
             </nav>
         </header>
         <main class "flex-shrink-0">

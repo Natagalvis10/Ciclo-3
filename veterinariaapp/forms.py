@@ -81,3 +81,20 @@ class GroupsForm(forms.ModelForm):
     class Meta:
         model= Group
         fields= '__all__'
+
+#FORMS PARA EL LOGIN
+class LoginForm(forms.Form):
+    username = forms.CharField(max_length=80, widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'Usuario'
+        }
+    ))
+    
+    password = forms.CharField(max_length=80, widget=forms.PasswordInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'password'
+        }
+    ))
+    

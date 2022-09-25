@@ -1,22 +1,54 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from .forms import VeterinarioForm, GroupsForm
-from .forms import ClienteForm
+from .forms import VeterinarioForm, GroupsForm, LoginForm, ClienteForm
 from .models import *
-from django.contrib.auth.models import User, Group
-from django.contrib.auth.models import  Permission
+from django.contrib.auth.models import User, Group, Permission
+from django.contrib.auth import authenticate, login, logout
+from django.urls import reverse
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 #VISTA DEL HOME PAGE
 def home(request):
     return render(request, 'home/index.html')
 
+#VISTA DEL LOGIN PAGE
+
+def login_user(request):
+    if request.method == 'POST':
+        form= LoginForm(request.POST)
+        if form.is_valid():
+            username=form.cleaned_data["username"]
+            password=form.cleaned_data["password"]
+            user= authenticate(request,username=username,password=password)
+            if user is not None:
+                login(request,user)
+                return redirect(reverse('home'))
+            else:
+                form = LoginForm()
+                messages.add_message(request, messages.ERROR, 'Las credenciales no son correctas')
+                return render(request, 'acceso/login.html', {'form': form})
+        else:    
+            return render(request, 'acceso/login.html')
+    else:
+        form = LoginForm()
+        return render(request, 'acceso/login.html', {'form': form})
+
+#VISTA DEL LOGOUT PAGE
+@login_required
+def logout_user(request):
+    logout(request)
+    return redirect(reverse('home'))
+
 #CRUD DEL MODELO DE ROLES
 #TABLA DEL MODELO DE ROLES
+@login_required(login_url='/login/')
 def listar_rol(request):
     roles= Group.objects.all()
     return render(request, 'roles/index.html',{'roles':roles})
 
 #LOGICA BASA EN FUNCIONES DE CREAR DEL MODELO DE ROLES
+@login_required(login_url='/login/')
 def crear_rol(request):
     if request.method == 'POST':
         form = GroupsForm(request.POST)
@@ -38,6 +70,7 @@ def crear_rol(request):
         return render(request, 'roles/rolform.html',{'form':form})
 
 #LOGICA BASA EN FUNCIONES DE ELIMINAR DEL MODELO DE ROLES
+@login_required(login_url='/login/')
 def eliminar_rol(request, id):
     rol=Group.objects.get(id=id)
     if request.method == 'POST':
@@ -49,18 +82,20 @@ def eliminar_rol(request, id):
 #LOGICA BASA EN FUNCIONES DE AGREGAR PERMISOS A LOS GRUPOS-ROLES
 def agregar_permisos(request):
     if request.method == 'POST':
-        rol = request.POST.get('permisos')
-        print (rol)
-        return HttpResponse(f'Prueba')
-    else:
-        return HttpResponse('Error')
+        permisos = request.POST.getlist('permisos')
+        rol = Group.objects.get(id = request.POST.get('rol'))
+        rol.permissions.set(permisos)
+        return HttpResponse("Hecho")
+
 #CRUD DEL MODELO DEL VETERINARIO
 #TABLA DEL MODELO DE VETERINARIO
+@login_required(login_url='/login/')
 def lista_veterinario(request):
     veterinarios= Veterinario.objects.all().order_by('id')
     return render(request, 'veterinario/lista_veterinario.html',{'veterinarios':veterinarios})
 
 #LOGICA BASA EN FUNCIONES DE CREAR DEL MODELO DE VETERINARIO
+@login_required(login_url='/login/')
 def crear_veterinario(request):
     if request.method == 'POST':
         form = VeterinarioForm(request.POST)
@@ -99,6 +134,7 @@ def crear_veterinario(request):
         return render (request,'veterinario/crear_veterinario.html',{'form':form})
 
 #LOGICA BASA EN FUNCIONES DE ACTUALIZAR DEL MODELO DE VETERINARIO
+@login_required(login_url='/login/')
 def actualizar_veterinario(request, id):
     veterinario= Veterinario.objects.get(id=id)
     if request.method == 'POST':
@@ -114,6 +150,7 @@ def actualizar_veterinario(request, id):
         return render(request, 'veterinario/crear_veterinario.html',{'form':form})  
 
 #LOGICA BASA EN FUNCIONES DE ELIMINAR DEL MODELO DE VETERINARIO
+@login_required(login_url='/login/')
 def eliminar_veterinario(request, id):
     veterinario= Veterinario.objects.get(id=id)
     if request.method == 'POST':
@@ -123,8 +160,20 @@ def eliminar_veterinario(request, id):
     return render(request, 'veterinario/eliminar_veterinario.html',{'veterinario':veterinario})
 
 #CRUD DEL MODELO DEL CLIENTE
+#TABLA DEL MODELO DE CLIENTE
+@login_required(login_url='/login/')
 def lista_cliente(request):
     clientes= cliente.objects.all()
     return render(request, 'cliente/lista_cliente.html',{'clientes':clientes})
 
+#LOGICA BASA EN FUNCIONES DE CREAR DEL MODELO DE VETERINARIO
+def crear_cliente(request):
+    if request.method == 'POST':
+        form = ClienteForm(request.POST)
+        if form.is_valid():
+            cliente=form.save()
+            
+    else:
+        form = ClienteForm()
+        return render(request, 'cliente/crear_cliente.html',{'form':form})
 

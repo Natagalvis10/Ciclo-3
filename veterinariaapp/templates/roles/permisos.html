@@ -16,6 +16,7 @@
    <form action="{% url 'agregar-permiso' %}" method="POST">
     {% csrf_token %}
     <div class="mb-3"> 
+        <input name="rol" type="hidden" value="{{rol.id}}"> 
         <label for="permisos" class="form-label">Permisos: </label>
         <select id="permisos" name="permisos" class="form-select" multiple>
             {% for permiso in permisos %}
