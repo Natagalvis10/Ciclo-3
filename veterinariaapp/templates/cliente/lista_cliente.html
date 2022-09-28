@@ -13,7 +13,7 @@
 
 <!--se herrada lo del cuenpo de base.html-->
 {% block cuerpo %}
-    <a href="" class="btn btn-primary mb-3">Ingresar Cliente</a>
+    <a href="{% url 'crear-cliente' %}" class="btn btn-primary mb-3">Ingresar Cliente</a>
     <div class="table-responsive">
         <table class="table table-striped-column">
             <tr>
@@ -26,13 +26,14 @@
             </tr>
             {% for cliente in  clientes%}
             <tr>
-                <td></td>
-                <td></td>             
-                <td></td>            
-                <td></td>
+                <td>{{cliente.id}}</td>
+                <td>{{cliente.persona.first_name}} {{cliente.persona.last_name}}</td>   
+                <td>{{cliente.persona.num_documento}}</td>         
+                <td>{{cliente.persona.celular}}</td>
+                <td>{{cliente.persona.email}}</td>
                 <td>
                     <a href="" class="btn btn-warning">Editar</a>
-                    <a href="" class="btn btn-danger">Eliminar</a>
+                    <a href="{% url 'eliminar-cliente' cliente.id %}" class="btn btn-danger">Eliminar</a>
                 </td>          
                 </tr>
             {% endfor %}

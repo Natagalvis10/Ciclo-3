@@ -20,19 +20,22 @@
                             <li class="nav-item">
                                 <a class="nav-link active" href="{% url 'home' %}">Home</a>
                             </li>
-                            <li class="nav-item">
-                                <!--FALTA LA URL PARA LA CONSULTA DE USUARIOS -->
-                                <a class="nav-link active" href="{% url 'lista-clientes' %}">Cliente</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" href="{% url 'lista-veterinarios' %}">Veterinario</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" href="">Mascotas</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" href="{% url 'lista-rol' %}">Roles</a>
-                            </li>
+                            {%if user.is_authenticated %}
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="{% url 'lista-clientes' %}">Cliente</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="{% url 'lista-veterinarios' %}">Veterinario</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="">Mascotas</a>
+                                </li>
+                                {% if request.user.is_staff %}
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="{% url 'lista-rol' %}">Roles</a>
+                                    </li>
+                                {% endif %}
+                            {% endif %}
                             <li class="nav-item">
                                 <!--FALTA LA URL PARA LA NUESTRA INFORMACIÓN COMO DESARROLLADORES DE LA APLICACIÓN WEB -->
                                 <a class="nav-link active" href="">Nosotros</a>

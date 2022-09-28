@@ -20,5 +20,6 @@ urlpatterns = [
     path('eliminar/veterinario/<int:id>', eliminar_veterinario, name='eliminar-veterinario'),
     #URLS DEL MODELO DE CLIENTE
     path('listar/cliente/', lista_cliente,name='lista-clientes'),
-    path('crear/cliente/', crear_cliente, name='crear-cliente')
+    path('crear/cliente/', crear_cliente, name='crear-cliente'),
+    path('eliminar/cliente/<int:id>', eliminar_cliente, name='eliminar-cliente')
 ]

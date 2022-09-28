@@ -10,11 +10,12 @@ class Persona(AbstractUser):
     class Meta(AbstractUser.Meta):
         abstract= False
     
-    def __str__(self):
-        return f"{self.user.first_name} {self.user.last_name}"
+'''    def __str__(self):
+        return f"{self.user.first_name} {self.user.last_name}"'''
 
 class cliente(models.Model):
-    persona=models.ForeignKey(Persona, on_delete=models.CASCADE)
+    #cambio en Persona por'veterinariaapp.Persona'
+    persona=models.ForeignKey('veterinariaapp.Persona', on_delete=models.CASCADE)
     def __str__(self):
         return f"{self.persona.first_name} {self.persona.last_name}" 
 
