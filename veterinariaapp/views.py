@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib import messages
+from django.core.exceptions import ObjectDoesNotExist
 
 #VISTA DEL HOME PAGE
 def home(request):
@@ -56,6 +57,9 @@ def crear_rol(request):
             grupo= form.save()
             permisos= form.cleaned_data["permisos"]
             grupo.permissions.set(permisos)
+            messages.success(request, "Rol almacenado correctamente")
+        else:
+            messages.error(request, "Error al crear rol")
         return redirect(reverse('lista-rol'))
     else:
         form = GroupsForm()
@@ -121,17 +125,17 @@ def crear_veterinario(request):
             persona.groups.add(rol)
             veterinario.persona = persona
             veterinario.save()
-            mensaje=f'El veterinario {veterinario} fue agreado correctamente'
-            return render(request, 'layout/mensaje.html',{'mensaje':mensaje})
+            messages.success(request, "Los datos del veterinario {veterinario} fueron almacenados correctamente")
         else:
-            mensaje=f'El veterinario {veterinario} fue agreado'
-            return render(request, 'layout/mensaje.html',{'mensaje':mensaje})
+            messages.error(request, "Verifique los datos e intente nuevamente") 
+        return redirect(reverse('lista-veterinarios'))
     else:
         form= VeterinarioForm()
         return render (request,'veterinario/crear_veterinario.html',{'form':form})
 
 #LOGICA BASA EN FUNCIONES DE ACTUALIZAR DEL MODELO DE VETERINARIO
 @login_required(login_url='/login/')
+@permission_required('veterinariaapp.change_veterinario', raise_exception=True)
 def actualizar_veterinario(request, id):
     veterinario= Veterinario.objects.get(id=id)
     if request.method == 'POST':
@@ -148,16 +152,19 @@ def actualizar_veterinario(request, id):
 
 #LOGICA BASA EN FUNCIONES DE ELIMINAR DEL MODELO DE VETERINARIO
 @login_required(login_url='/login/')
+@permission_required('veterinariaapp.delete_veterinario', raise_exception=True)
 def eliminar_veterinario(request, id):
     veterinario= Veterinario.objects.get(id=id)
     if request.method == 'POST':
         veterinario.delete()
+        messages.success(request, "Los datos del veterinario fueron eliminados correctamente")
         return redirect('lista-veterinarios')
     return render(request, 'veterinario/eliminar_veterinario.html',{'veterinario':veterinario})
 
 #CRUD DEL MODELO DEL CLIENTE
 #TABLA DEL MODELO DE CLIENTE
 @login_required(login_url='/login/')
+@permission_required('veterinariaapp.view_cliente', raise_exception=True)
 def lista_cliente(request):
     clientes= cliente.objects.all()
     return render(request, 'cliente/lista_cliente.html',{'clientes':clientes})
@@ -192,24 +199,27 @@ def crear_cliente(request):
             persona.groups.add(rol)
             cliente.persona = persona
             cliente=form.save()
-            mensaje=f'El cliente {cliente} fue agreado correctamente'
-            return render(request, 'layout/mensaje.html',{'mensaje':mensaje})
+            messages.success(request, "Los datos del veterinario {veterinario} fueron almacenados correctamente")
         else:
-            mensaje=f'El cliente {cliente} fue agreado'
-            return render(request, 'layout/mensaje.html',{'mensaje':mensaje})
+            messages.error(request, "Verifique los datos e intente nuevamente")
+        return redirect(reverse('lista-clientes'))
     else:
         form = ClienteForm()
         return render(request, 'cliente/crear_cliente.html',{'form':form})
 
 #LOGICA BASA EN FUNCIONES DE ACTUALIZAR DEL MODELO DE CLIENTE
+@login_required(login_url='/login/')
+@permission_required('veterinariaapp.change_cliente', raise_exception=True)
 def actualizar_cliente(request, id):
     pass
 
 #LOGICA BASA EN FUNCIONES DE ELIMINAR DEL MODELO DE CLIENTE
+@login_required(login_url='/login/')
+@permission_required('veterinariaapp.delete_cliente', raise_exception=True)
 def eliminar_cliente(request, id):
     clientes= cliente.objects.get(id=id)
     if request.method == 'POST':
         clientes.delete()
-        #mensaje= f'El veterinario {veterinario} fue eliminado correctamente'
+        messages.success(request, "Los datos del cliente fueron eliminados correctamente")
         return redirect('lista-clientes')
     return render(request, 'cliente/eliminar_cliente.html',{'cliente':clientes})
