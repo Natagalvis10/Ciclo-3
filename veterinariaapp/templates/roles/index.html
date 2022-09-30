@@ -1,0 +1,35 @@
+<!--Se trae la extención de la base-->
+{% extends 'layout/base.html' %}
+
+<!--Se nombre la pagina con lo que hereda de base.html-->
+{% block titulo %}
+    Listar Roles
+{% endblock titulo %}
+
+<!--Un titulo que hereda de base.html-->
+{% block pagina %}
+    Roles
+{% endblock pagina %}
+
+<!--se herrada lo del cuenpo de base.html-->
+{% block cuerpo %}
+    <a href="{% url 'crear-rol' %}" class="btn btn-primary mb-3">Crear Roles</a>
+    <div class="table-responsive">
+        <table class="table table-striped-column">
+            <tr>
+                <th>ID</th>            
+                <th>Nombre</th>
+            </tr>
+            {% for rol in  roles%}
+            <tr>
+                <td>{{rol.id}}</td>
+                <td>{{rol.name}}</td>             
+                <td>
+                    <a href="" class="btn btn-warning">Editar</a>
+                    <a href="{% url 'eliminar-rol' rol.id %}" class="btn btn-danger">Eliminar</a>
+                </td>          
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock cuerpo %}

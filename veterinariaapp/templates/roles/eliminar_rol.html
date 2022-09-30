@@ -1,0 +1,19 @@
+{% extends 'layout/base.html' %}
+
+{% block titulo %}
+    Eliminar Rol
+{% endblock titulo %}
+
+<!--Un titulo que hereda de base.html-->
+{% block pagina %}
+   Eliminar el Rol
+{% endblock pagina %}
+
+{% block cuerpo %}
+    <form method="post">
+        {% csrf_token %}
+        <p class "h2 navbar-brand"> Eliminar Rol del registro</p>
+        {% include 'layout/botones_eliminar.html' %}
+        <a href="{% url 'lista-rol' %}" class="btn btn-default">Cancelar</a>
+    </form>
+{% endblock cuerpo %}
