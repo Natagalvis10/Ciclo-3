@@ -1,0 +1,24 @@
+{% extends 'layout/base.html' %}
+
+{% block titulo %}
+    Crear Veterinario
+{% endblock titulo %}
+
+<!--Un titulo que hereda de base.html-->
+{% block pagina %}
+    Formulario para Veterinario
+{% endblock pagina %}
+
+{% block cuerpo %}
+<form method="post">
+    {% csrf_token %}
+    {% for field in form%}
+        <div class="mb-3"> 
+            <label class="form-label">{{ field.label }}</label>
+            {{ field }}
+        </div>
+    {% endfor %}
+    {% include 'layout/botones_crear.html' %}
+</form>
+{% endblock cuerpo %}
+        
