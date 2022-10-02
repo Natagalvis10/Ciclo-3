@@ -32,7 +32,7 @@
                 <td>{{cliente.persona.celular}}</td>
                 <td>{{cliente.persona.email}}</td>
                 <td>
-                    <a href="" class="btn btn-warning">Editar</a>
+                    <a href="{% url 'actualizar-cliente' cliente.id %}" class="btn btn-warning">Editar</a>
                     <a href="{% url 'eliminar-cliente' cliente.id %}" class="btn btn-danger">Eliminar</a>
                 </td>          
                 </tr>

@@ -11,7 +11,7 @@
 
 {% block cuerpo %}
 <form method="post">
-    {% csrf_token %}
+    {% csrf_token %} 
     {% for field in form%}
         <div class="mb-3"> 
             <label class="form-label">{{ field.label }}</label>
@@ -21,4 +21,3 @@
     {% include 'layout/botones_crear.html' %}
 </form>
 {% endblock cuerpo %}
-        

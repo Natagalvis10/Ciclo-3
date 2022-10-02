@@ -1,0 +1,42 @@
+<!--Se trae la extención de la base-->
+{% extends 'layout/base.html' %}
+
+<!--Se nombre la pagina con lo que hereda de base.html-->
+{% block titulo %}
+    Listar Mascota
+{% endblock titulo %}
+
+<!--Un titulo que hereda de base.html-->
+{% block pagina %}
+    Mascotas
+{% endblock pagina %}
+
+<!--se herrada lo del cuenpo de base.html-->
+{% block cuerpo %}
+    <a href="{% url 'crear-mascota' %}" class="btn btn-primary mb-3">Ingresar Mascota</a>
+    <div class="table-responsive">
+        <table class="table table-striped-column">
+            <tr>
+                <th>ID</th>           
+                <th>Nombre Mascota</th>
+                <th>Raza</th>
+                <th>Especie</th>
+                <th>Edad</th>
+                <th>Opciones</th>
+            </tr>
+            {% for mascota in  mascotas%}
+            <tr>
+                <td>{{mascota.id}}</td>
+                <td>{{mascota.nobre}}</td>   
+                <td>{{mascota.raza}}</td>         
+                <td>{{mascota.especie}}</td>
+                <td>{{mascota.edad}}</td>
+                <td>
+                    <a href="{% url 'actualizar-mascota' mascota.id %}" class="btn btn-warning">Editar</a>
+                    <a href="{% url 'eliminar-mascota' mascota.id %}" class="btn btn-danger">Eliminar</a>
+                </td>          
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock cuerpo %}

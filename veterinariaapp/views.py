@@ -8,6 +8,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
+from django.views.generic import ListView
 
 #VISTA DEL HOME PAGE
 def home(request):
@@ -138,17 +139,14 @@ def crear_veterinario(request):
 @permission_required('veterinariaapp.change_veterinario', raise_exception=True)
 def actualizar_veterinario(request, id):
     veterinario= Veterinario.objects.get(id=id)
-    if request.method == 'POST':
+    if request.method == 'GET':
+        form = VeterinarioForm(instance=veterinario)
+    else:
         form = VeterinarioForm(request.POST, instance=veterinario)
         if form.is_valid():
-            veterinario= form.save()
-            mensaje= f'El veterinario {veterinario} fue actualizado correctamente'
-        else:
-            mensaje= f'El veterinario {veterinario} no fue actualizado'
-        return render (request,'layout/mensaje.html',{'mensaje':mensaje})
-    else:
-        form = VeterinarioForm(instance=veterinario)
-        return render(request, 'veterinario/crear_veterinario.html',{'form':form})  
+            form.save()
+        return redirect(reverse('lista-veterinarios'))
+    return render(request, 'veterinario/crear_veterinario.html',{'form':form})
 
 #LOGICA BASA EN FUNCIONES DE ELIMINAR DEL MODELO DE VETERINARIO
 @login_required(login_url='/login/')
@@ -211,7 +209,15 @@ def crear_cliente(request):
 @login_required(login_url='/login/')
 @permission_required('veterinariaapp.change_cliente', raise_exception=True)
 def actualizar_cliente(request, id):
-    pass
+    clientes= cliente.objects.get(id=id)
+    if request.method == 'GET':
+        form = ClienteForm(instance=clientes)
+    else:
+        form = ClienteForm(request.POST, instance=clientes)
+        if form.is_valid():
+            form.save()
+        return redirect(reverse('lista-clientes'))
+    return render(request, 'cliente/crear_cliente.html',{'form':form})
 
 #LOGICA BASA EN FUNCIONES DE ELIMINAR DEL MODELO DE CLIENTE
 @login_required(login_url='/login/')
@@ -223,3 +229,99 @@ def eliminar_cliente(request, id):
         messages.success(request, "Los datos del cliente fueron eliminados correctamente")
         return redirect('lista-clientes')
     return render(request, 'cliente/eliminar_cliente.html',{'cliente':clientes})
+
+#CRUD DEL MODELO DEL MASCOTA
+#TABLA DEL MODELO DE MASCOTA
+@login_required(login_url='/login/')
+@permission_required('veterinariaapp.view_mascota', raise_exception=True)
+def lista_mascota(request):
+    mascota= Mascota.objects.all()
+    return render(request, 'mascota/lista_mascota.html',{'mascotas':mascota})
+
+#LOGICA BASA EN FUNCIONES DE CREAR DEL MODELO DE MASCOTA
+@login_required(login_url='/login/')
+@permission_required('veterinariaapp.add_mascota', raise_exception=True)
+def crear_mascota(request):
+    if request.method == 'POST':
+        form = MascotaFrom(request.POST)
+        if form.is_valid():
+            form.save()
+            print("guardado")
+        else:
+            print("no guardado")
+        return redirect(reverse('lista-mascota'))
+    else:
+        form= MascotaFrom()
+        return render (request,'mascota/crear_mascota.html',{'form':form})
+
+#LOGICA BASA EN FUNCIONES DE ACTUALIZAR DEL MODELO DE MASCOTA
+@login_required(login_url='/login/')
+@permission_required('veterinariaapp.change_mascota', raise_exception=True)
+def actualizar_mascota(request,id):
+    mascota= Mascota.objects.get(id=id)
+    if request.method == 'GET':
+        form = MascotaFrom(instance=mascota)
+    else:
+        form = MascotaFrom(request.POST, instance=mascota)
+        if form.is_valid():
+            form.save()
+        return redirect(reverse('lista-mascota'))
+    return render(request, 'mascota/crear_mascota.html',{'form':form})
+
+#LOGICA BASA EN FUNCIONES DE ELIMINAR DEL MODELO DE MASCOTA
+@login_required(login_url='/login/')
+@permission_required('veterinariaapp.delete_mascota', raise_exception=True)
+def eliminar_mascota(request, id):
+    mascota= Mascota.objects.get(id=id)
+    if request.method == 'POST':
+        mascota.delete()
+        messages.success(request, "Los datos de la mascota  fueron eliminados correctamente")
+        return redirect('lista-mascota')
+    return render(request, 'mascota/eliminar_mascota.html',{'mascota':mascota})
+
+#CRUD DEL MODELO DEL REGISTRO
+#TABLA DEL MODELO DE REGISTRO
+def lista_registro(request):
+    registro= Registro.objects.all()
+    return render(request, 'registro/lista_registro.html',{'registros':registro})
+
+#LOGICA BASA EN FUNCIONES DE CREAR DEL MODELO DE REGISTRO
+@login_required(login_url='/login/')
+@permission_required('veterinariaapp.change_registro', raise_exception=True)
+def crear_registro(request):
+    if request.method == 'POST':
+        form= RegistroFrom(request.POST)
+        print("requesr valido")
+        if form.is_valid():
+            registro= form.save()
+        else:
+            print("no guardo")
+            print(form.errors)
+        return redirect(reverse('lista-registro'))
+    else:
+        form= RegistroFrom()
+        return render (request,'registro/crear_registro.html',{'form':form})
+
+#LOGICA BASA EN FUNCIONES DE ACTUALIZAR DEL MODELO DE MASCOTA
+@login_required(login_url='/login/')
+@permission_required('veterinariaapp.change_registro', raise_exception=True)
+def actualizar_registro(request,id):
+    registro= Registro.objects.get(id=id)
+    if request.method == 'GET':
+        form = RegistroFrom(instance=registro)
+    else:
+        form = RegistroFrom(request.POST, instance=registro)
+        if form.is_valid():
+            form.save()
+        return redirect(reverse('lista-registro'))
+    return render(request, 'registro/crear_registro.html',{'form':form})
+
+@login_required(login_url='/login/')
+@permission_required('veterinariaapp.delete_registro', raise_exception=True)
+def eliminar_registro(request, id):
+    registro= Registro.objects.get(id=id)
+    if request.method == 'POST':
+        registro.delete()
+        messages.success(request, "Los datos de la mascota  fueron eliminados correctamente")
+        return redirect('lista-registro')
+    return render(request, 'registro/eliminar_registro.html',{'registro':registro})

@@ -1,0 +1,19 @@
+{% extends 'layout/base.html' %}
+
+{% block titulo %}
+    Eliminar Mascota
+{% endblock titulo %}
+
+<!--Un titulo que hereda de base.html-->
+{% block pagina %}
+   Eliminar una mascota
+{% endblock pagina %}
+
+{% block cuerpo %}
+    <form method="post">
+        {% csrf_token %}
+        <p class "h2 navbar-brand"> Eliminar veterinario {{mascota.nobre}} del registro</p>
+        {% include 'layout/botones_eliminar.html' %}
+        <a href="{% url 'lista-mascota' %}" class="btn btn-default">Cancelar</a>
+    </form>
+{% endblock cuerpo %}

@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import *
 
+
 urlpatterns = [
     #URL DEL HOME PAGE
     path('',home, name='home'),
@@ -21,5 +22,16 @@ urlpatterns = [
     #URLS DEL MODELO DE CLIENTE
     path('listar/cliente/', lista_cliente,name='lista-clientes'),
     path('crear/cliente/', crear_cliente, name='crear-cliente'),
-    path('eliminar/cliente/<int:id>', eliminar_cliente, name='eliminar-cliente')
+    path('actualizar/cliente/<int:id>',actualizar_cliente, name='actualizar-cliente'),
+    path('eliminar/cliente/<int:id>', eliminar_cliente, name='eliminar-cliente'),
+    #URLS DEL MODELO DE MASCOTA
+    path('listar/mascota/', lista_mascota, name='lista-mascota'),
+    path('crear/mascota/', crear_mascota, name='crear-mascota'),
+    path('actualizar/mascota/<int:id>', actualizar_mascota, name='actualizar-mascota'),
+    path('eliminar/mascota/<int:id>', eliminar_mascota, name='eliminar-mascota'),
+    #URLS DEL MODELO DE REGISTRO
+    path('listar/registro/', lista_registro, name='lista-registro'),
+    path('crear/registro/', crear_registro, name='crear-registro'),
+    path('actualizar/registro/<int:id>', actualizar_registro, name='actualizar-registro'),
+    path('eliminar/registro/<int:id>', eliminar_registro, name='eliminar-registro'),
 ]

@@ -58,7 +58,7 @@ class VeterinarioForm(forms.ModelForm):
     )))
     class Meta:
         model= Veterinario
-        fields= ['num_profesional']
+        fields= ['username','password','rol','email','nombres','apellidos','tipo_documento','num_documento','celular','num_profesional']
 
 #FORMS DE CLIENTE
 class ClienteForm(forms.ModelForm):
@@ -110,7 +110,7 @@ class ClienteForm(forms.ModelForm):
     )))
     class Meta:
         model= cliente
-        fields= []
+        fields= ['username','password','rol','email','nombres','apellidos','tipo_documento','num_documento','celular']
 
 #FORMS DE GRUPOS
 class GroupsForm(forms.ModelForm):
@@ -138,11 +138,105 @@ class LoginForm(forms.Form):
             'placeholder': 'Usuario'
         }
     ))
-    
     password = forms.CharField(max_length=80, widget=forms.PasswordInput(
         attrs={
             'class': 'form-control',
             'placeholder': 'password'
         }
     ))
-    
+
+#FORMS DE MASCOTA
+class MascotaFrom(forms.ModelForm):
+    cliente=forms.ModelChoiceField(label='cliente', queryset=cliente.objects.all(), widget=forms.Select(
+        attrs={
+            'class':'form-select'
+        }
+    ))
+    nobre= forms.CharField(max_length=120, widget=(forms.TextInput(
+        attrs={
+            'class': "form-control"
+        }
+    )))
+    raza= forms.CharField(max_length=120, widget=(forms.TextInput(
+        attrs={
+            'class': "form-control"
+        }
+    )))
+    sexo= forms.CharField(max_length=120, widget=(forms.TextInput(
+        attrs={
+            'class': "form-control"
+        }
+    )))
+    especie= forms.CharField(max_length=120, widget=(forms.TextInput(
+        attrs={
+            'class': "form-control"
+        }
+    )))
+    color= forms.CharField(max_length=120, widget=(forms.TextInput(
+        attrs={
+            'class': "form-control"
+        }
+    )))
+    edad= forms.CharField(max_length=120, widget=(forms.TextInput(
+        attrs={
+            'class': "form-control"
+        }
+    )))
+    peso= forms.CharField(max_length=120, widget=(forms.TextInput(
+        attrs={
+            'class': "form-control"
+        }
+    )))
+    class Meta:
+        model= Mascota
+        fields= ['cliente','nobre','raza','sexo','especie','color','edad','peso']
+
+#FORMS DE MASCOTA
+class RegistroFrom(forms.ModelForm):
+    mascota=forms.ModelChoiceField(label='mascota', queryset=Mascota.objects.all(), widget=forms.Select(
+        attrs={
+            'class':'form-select'
+        }
+    ))
+    veterinario=forms.ModelChoiceField(label='veterinario', queryset=Veterinario.objects.all(), widget=forms.Select(
+        attrs={
+            'class':'form-select'
+        }
+    ))
+    num_histial= forms.CharField(max_length=120, widget=(forms.TextInput(
+        attrs={
+            'class': "form-control"
+        }
+    )))
+    fecha= forms.DateField(widget=(forms.DateInput(
+        attrs={
+            'class': "form-control"
+        }
+    )))
+    motivo= forms.CharField(max_length=120, widget=(forms.Textarea(
+        attrs={
+            'class': "form-control",
+            
+        }
+    )))
+    anamnesicos= forms.CharField(max_length=120, widget=(forms.Textarea(
+        attrs={
+            'class': "form-control",
+            
+        }
+    )))
+    diagnostico= forms.CharField(max_length=120, widget=(forms.Textarea(
+        attrs={
+            'class': "form-control",
+            
+        }
+    )))
+    tratamiento= forms.CharField(max_length=120, widget=(forms.Textarea(
+        attrs={
+            'class': "form-control",
+        
+        }
+    )))
+    class Meta:
+        model= Registro
+        fields= ['mascota','veterinario','num_histial','fecha','motivo','anamnesicos','diagnostico','tratamiento']

@@ -28,7 +28,10 @@
                                     <a class="nav-link active" href="{% url 'lista-veterinarios' %}">Veterinario</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link active" href="">Mascotas</a>
+                                    <a class="nav-link active" href="{% url 'lista-mascota' %}">Mascotas</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="{% url 'lista-registro' %}">Registro</a>
                                 </li>
                                 {% if request.user.is_staff %}
                                     <li class="nav-item">

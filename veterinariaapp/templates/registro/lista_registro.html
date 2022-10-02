@@ -1,0 +1,42 @@
+<!--Se trae la extención de la base-->
+{% extends 'layout/base.html' %}
+
+<!--Se nombre la pagina con lo que hereda de base.html-->
+{% block titulo %}
+    Listar registros
+{% endblock titulo %}
+
+<!--Un titulo que hereda de base.html-->
+{% block pagina %}
+    Registro
+{% endblock pagina %}
+
+<!--se herrada lo del cuenpo de base.html-->
+{% block cuerpo %}
+    <a href="{% url 'crear-registro' %}" class="btn btn-primary mb-3">Ingresar Registro de la mascota</a>
+    <div class="table-responsive">
+        <table class="table table-striped-column">
+            <tr>
+                <th>ID</th>           
+                <th>Mascota</th>
+                <th>veterinario</th>
+                <th>Motivo</th>
+                <th>Tratamiento</th>
+                <th>Opciones</th>
+            </tr>
+            {% for registro in  registros%}
+            <tr>
+                <td>{{registro.id}}</td>
+                <td>{{registro.mascota.nobre}}</td>   
+                <td>{{registro.veterinario.persona.first_name}} {{registro.veterinario.persona.last_name}}</td>         
+                <td>{{registro.motivo}}</td>
+                <td>{{registro.tratamiento}}</td>
+                <td>
+                    <a href="{% url 'actualizar-registro' registro.id %}" class="btn btn-warning">Editar</a>
+                    <a href="{% url 'eliminar-registro' registro.id %}" class="btn btn-danger">Eliminar</a>
+                </td>          
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock cuerpo %}

@@ -30,8 +30,8 @@
                 <td>{{veterinario.persona.first_name}} {{veterinario.persona.last_name}}</td>            
                 <td>{{veterinario.persona.celular}}</td>
                 <td>
-                    <a href="{% url 'actualizar-veterinario' veterinario.id %}" class="btn btn-warning">Editar</a>
-                    <a href="{% url 'eliminar-veterinario' veterinario.id %}" class="btn btn-danger">Eliminar</a>
+                        <a href="{% url 'actualizar-veterinario' veterinario.id %}" class="btn btn-warning">Editar</a>
+                        <a href="{% url 'eliminar-veterinario' veterinario.id %}" class="btn btn-danger">Eliminar</a>
                 </td>          
                 </tr>
             {% endfor %}
