@@ -66,10 +66,6 @@ def crear_rol(request):
         form = GroupsForm()
         return render(request, 'roles/rolform.html',{'form':form})
 
-#LOGICA BASA EN FUNCIONES DE ACTUALIZAR DEL MODELO DE ROLES
-def actualizar_rol(request, id):
-    pass
-
 #LOGICA BASA EN FUNCIONES DE ELIMINAR DEL MODELO DE ROLES
 @login_required(login_url='/login/')
 def eliminar_rol(request, id):
@@ -138,7 +134,7 @@ def crear_veterinario(request):
 @login_required(login_url='/login/')
 @permission_required('veterinariaapp.change_veterinario', raise_exception=True)
 def actualizar_veterinario(request, id):
-    veterinario= Veterinario.objects.get(id=id)
+    veterinario= Persona.objects.get(id=id)
     if request.method == 'GET':
         form = VeterinarioForm(instance=veterinario)
     else:
@@ -209,7 +205,7 @@ def crear_cliente(request):
 @login_required(login_url='/login/')
 @permission_required('veterinariaapp.change_cliente', raise_exception=True)
 def actualizar_cliente(request, id):
-    clientes= cliente.objects.get(id=id)
+    clientes= Persona.objects.get(id=id)
     if request.method == 'GET':
         form = ClienteForm(instance=clientes)
     else:
@@ -281,6 +277,8 @@ def eliminar_mascota(request, id):
 
 #CRUD DEL MODELO DEL REGISTRO
 #TABLA DEL MODELO DE REGISTRO
+@login_required(login_url='/login/')
+@permission_required('veterinariaapp.view_registro', raise_exception=True)
 def lista_registro(request):
     registro= Registro.objects.all()
     return render(request, 'registro/lista_registro.html',{'registros':registro})
@@ -302,7 +300,7 @@ def crear_registro(request):
         form= RegistroFrom()
         return render (request,'registro/crear_registro.html',{'form':form})
 
-#LOGICA BASA EN FUNCIONES DE ACTUALIZAR DEL MODELO DE MASCOTA
+#LOGICA BASA EN FUNCIONES DE ACTUALIZAR DEL MODELO DE REGISTRO
 @login_required(login_url='/login/')
 @permission_required('veterinariaapp.change_registro', raise_exception=True)
 def actualizar_registro(request,id):
@@ -316,6 +314,7 @@ def actualizar_registro(request,id):
         return redirect(reverse('lista-registro'))
     return render(request, 'registro/crear_registro.html',{'form':form})
 
+#LOGICA BASA EN FUNCIONES DE ELIMINAR DEL MODELO DE REGISTRO
 @login_required(login_url='/login/')
 @permission_required('veterinariaapp.delete_registro', raise_exception=True)
 def eliminar_registro(request, id):
