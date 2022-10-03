@@ -191,7 +191,7 @@ class MascotaFrom(forms.ModelForm):
         model= Mascota
         fields= ['cliente','nobre','raza','sexo','especie','color','edad','peso']
 
-#FORMS DE MASCOTA
+#FORMS DE  REGISTRO
 class RegistroFrom(forms.ModelForm):
     mascota=forms.ModelChoiceField(label='mascota', queryset=Mascota.objects.all(), widget=forms.Select(
         attrs={
