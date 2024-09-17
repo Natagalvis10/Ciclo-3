@@ -1,0 +1,40 @@
+<!--Se trae la extención de la base-->
+{% extends 'layout/base.html' %}
+
+<!--Se nombre la pagina con lo que hereda de base.html-->
+{% block titulo %}
+    Listar Veterinario
+{% endblock titulo %}
+
+<!--Un titulo que hereda de base.html-->
+{% block pagina %}
+    Veterinarios
+{% endblock pagina %}
+
+<!--se herrada lo del cuenpo de base.html-->
+{% block cuerpo %}
+    <a href="{% url 'crear-veterinario' %}" class="btn btn-primary mb-3">Ingresar Veterinario</a>
+    <div class="table-responsive">
+        <table class="table table-striped-column">
+            <tr>
+                <th>ID</th>            
+                <th>Numero Profesional</th>            
+                <th>Nombre</th>
+                <th>Celular</th>
+                <th>Opciones</th>
+            </tr>
+            {% for veterinario in  veterinarios%}
+            <tr>
+                <td>{{veterinario.id}}</td>
+                <td>{{veterinario.num_profesional}}</td>             
+                <td>{{veterinario.persona.first_name}} {{veterinario.persona.last_name}}</td>            
+                <td>{{veterinario.persona.celular}}</td>
+                <td>
+                        <a href="{% url 'actualizar-veterinario' veterinario.id %}" class="btn btn-warning">Editar</a>
+                        <a href="{% url 'eliminar-veterinario' veterinario.id %}" class="btn btn-danger">Eliminar</a>
+                </td>          
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock cuerpo %}

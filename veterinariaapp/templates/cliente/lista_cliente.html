@@ -1,0 +1,42 @@
+<!--Se trae la extención de la base-->
+{% extends 'layout/base.html' %}
+
+<!--Se nombre la pagina con lo que hereda de base.html-->
+{% block titulo %}
+    Listar Cliente
+{% endblock titulo %}
+
+<!--Un titulo que hereda de base.html-->
+{% block pagina %}
+    Clientes
+{% endblock pagina %}
+
+<!--se herrada lo del cuenpo de base.html-->
+{% block cuerpo %}
+    <a href="{% url 'crear-cliente' %}" class="btn btn-primary mb-3">Ingresar Cliente</a>
+    <div class="table-responsive">
+        <table class="table table-striped-column">
+            <tr>
+                <th>ID</th>           
+                <th>Nombre Clente</th>
+                <th>Numero Documento</th>
+                <th>Celular</th>
+                <th>Correo</th>
+                <th>Opciones</th>
+            </tr>
+            {% for cliente in  clientes%}
+            <tr>
+                <td>{{cliente.id}}</td>
+                <td>{{cliente.persona.first_name}} {{cliente.persona.last_name}}</td>   
+                <td>{{cliente.persona.num_documento}}</td>         
+                <td>{{cliente.persona.celular}}</td>
+                <td>{{cliente.persona.email}}</td>
+                <td>
+                    <a href="{% url 'actualizar-cliente' cliente.id %}" class="btn btn-warning">Editar</a>
+                    <a href="{% url 'eliminar-cliente' cliente.id %}" class="btn btn-danger">Eliminar</a>
+                </td>          
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock cuerpo %}
